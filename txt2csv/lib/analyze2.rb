@@ -6,7 +6,7 @@
 #  -s : find and sort suffixes by frequency of occurances
 #
 # It reads a text file from STDIN
-# It writes the resulting histogram to STDOUT
+# It writes the resulting histogram to STDO
 
 case ARGV[0]
   when '-p'

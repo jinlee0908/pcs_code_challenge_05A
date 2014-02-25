@@ -2,4 +2,32 @@
 # this first line is how the operating system knows to use ruby to execute this file
 # use chmod oug+x txt2csv to make sure the file is executable
 
-puts "This is where txt2csv will be invoked from the command line."
+require 'thor'
+require_relative '../lib/analyzenew'
+class Commands < Thor
+
+  class_options %w( input -i ) => :string
+  class_options %w( output -o) => :string
+  class_options %w( prefix -p ) => :string 
+  class_options %w( suffix -s ) => :string
+
+  desc 'analyze', 'Initate Analyze commands'
+  def analyze
+  	chosen_option = options[:prefix] ? :prefix : :suffix
+  	puts chosen_option.inspect
+    inputtxt = options[:input] if options[:i] || options[:input]
+    outputtxt = options[:output] if options[:o] || options[:output]
+
+    analysis = Analyze.new(chosen_option,inputtxt, outputtxt)
+    analysis.output_file(analysis.histogram(analysis.name_pull))
+  end
+	
+	desc 'convert', 'Initate Convert commands'
+  def convert
+    inputtxt = options[:input] if options[:i] || options[:input]
+    outputtxt = options[:output] if options[:o] || options[:output]
+    prefixtxt = options[:prefix] if options[:p] || options[:prefix]
+    suffixtxt = options[:suffix] if options[:s] || options[:suffix]
+  end
+end
+Commands.start(ARGV)
