@@ -34,8 +34,6 @@ class Parse
     suffix_array
   end
 
-
-
   def self.parse_names(prefixes, suffixes, name_string)
     parsed_name = { pre: '', first: '', middle: '', last: '', suffix: '' }
     word = name_string.split
