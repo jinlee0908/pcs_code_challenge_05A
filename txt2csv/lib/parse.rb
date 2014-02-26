@@ -1,31 +1,42 @@
 # this class is to parse out name, phone, email and twitter data.
 class Parse
-  def initialize (prefix, suffix, input, output)
-    @prefix = prefix
-    @suffix = suffix
+  def initialize (prefile, suffile, input, output)
+    @prefile = prefile
+    @suffile = suffile
     @input = input
     @output = output
   end
 
-  def name_pull
-    parsed_names = []
-    IO.foreach(@input) { |line| parsed_names << line.scan(/[^\t\n]+/)[0] }
-    parsed_names
+  def output
+    CSV.open(@outfile, "w", :write_headers =>true,
+      :headers =>['pre', 'first', 'middle', 'last', 'country',
+       'area', 'phonepre', 'line', 'ext', 'twit', 'email']) do |csv|
+      
+      IO.foreach(@infile) do |line| 
+        name_string = Parse.parse_names(pre_array, suf_array,line.scan(/[^\t\n]+/)[0])
+        phone_string = Parse.parse_numbers(line.scan(/[^\t\n]+/)[1])
+        twit_string = Parse.parse_twitter(line.scan(/[^\t\n]+/)[2])
+        email_string = Parse.parse_email(line.scan(/[^\t\n]+/)[3])
+        csv << name_string + phone_string + twit_string + email_string
+      end   
+    end
   end
 
   def pre_array
     prefix_array = []
-    IO.foreach(@prefix) { |line| prefix_array << line.scan(/^\S*/)[0] }
+    IO.foreach(@prefile) { |line| prefix_array << line.scan(/^\S*/)[0] }
     prefix_array
   end
 
   def suf_array
     suffix_array = []
-    IO.foreach(@suffix) { |line| suffix_array << line.scan(/^\S*/)[0] }
+    IO.foreach(@suffile) { |line| suffix_array << line.scan(/^\S*/)[0] }
     suffix_array
   end
 
-  def self.parse_names(prefix_array, suffix_array, parsed_names)
+
+
+  def self.parse_names(prefixes, suffixes, name_string)
     parsed_name = { pre: '', first: '', middle: '', last: '', suffix: '' }
     word = name_string.split
     parsed_name[:suffix] = word.pop if suffixes.include? word.last
