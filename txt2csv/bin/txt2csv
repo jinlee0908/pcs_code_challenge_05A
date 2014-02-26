@@ -4,6 +4,7 @@
 
 require 'thor'
 require_relative '../lib/analyzenew'
+require_relative '../lib/parse.rb'
 class Commands < Thor
 
   class_options %w( input -i ) => :string

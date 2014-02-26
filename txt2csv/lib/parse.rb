@@ -1,24 +1,27 @@
 # this class is to parse out name, phone, email and twitter data.
+require 'csv'
+
 class Parse
-  def initialize (prefile, suffile, input, output)
+  def initialize(prefile, suffile, infile, outfile)
     @prefile = prefile
     @suffile = suffile
-    @input = input
-    @output = output
+    @infile = infile
+    @outfile = outfile
   end
 
   def output
     CSV.open(@outfile, "w", :write_headers =>true,
       :headers =>['pre', 'first', 'middle', 'last', 'country',
-       'area', 'phonepre', 'line', 'ext', 'twit', 'email']) do |csv|
-      
-      IO.foreach(@infile) do |line| 
-        name_string = Parse.parse_names(pre_array, suf_array,line.scan(/[^\t\n]+/)[0])
+                  'area', 'phonepre', 'line', 'ext', 'twit',
+                  'email']) do |csv|    
+      IO.foreach(@infile) do |line|
+        name_string = Parse.parse_names(pre_array, suf_array,
+                                        line.scan(/[^\t\n]+/)[0])
         phone_string = Parse.parse_numbers(line.scan(/[^\t\n]+/)[1])
         twit_string = Parse.parse_twitter(line.scan(/[^\t\n]+/)[2])
         email_string = Parse.parse_email(line.scan(/[^\t\n]+/)[3])
         csv << name_string + phone_string + twit_string + email_string
-      end   
+      end
     end
   end
 
