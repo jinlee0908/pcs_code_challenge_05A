@@ -9,7 +9,7 @@ class Commands < Thor
 
   class_options %w( input -i ) => :string
   class_options %w( output -o) => :string
-  class_options %w( prefix -p ) => :string 
+  class_options %w( prefix -p ) => :string
   class_options %w( suffix -s ) => :string
 
   desc 'analyze', 'Initate Analyze commands'
@@ -21,7 +21,7 @@ class Commands < Thor
     analysis = Analyze.new(chosen_option,inputtxt, outputtxt)
     analysis.output_file(analysis.histogram(analysis.name_pull))
   end
-	
+
 	desc 'convert', 'Initate Convert commands'
   def convert
     inputtxt = options[:input] if options[:i] || options[:input]
