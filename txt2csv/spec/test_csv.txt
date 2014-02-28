@@ -1,3 +1,0 @@
-pre,first,middle,last,country,area,phonepre,line,ext,twit,email
-Mrs.,Theresa,E.,Stamm,"",1,678,523,6736,"",Reinger,kieran@runte.biz
-"",Keara,"",Maggio,"",1,399,471,4388,9581,Weber,Not Found
