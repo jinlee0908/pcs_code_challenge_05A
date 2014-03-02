@@ -11,3 +11,10 @@ describe 'outputs CSV file' do
     File.delete('spec/test_csv.txt')
   end
 end
+
+describe 'requires various inputs and outputs specified' do
+  it 'should not create a test_csv' do
+    `./bin/txt2csv`
+    File.exist?('spec/test_csv.txt').should be false
+  end
+end

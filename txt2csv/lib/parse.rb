@@ -1,4 +1,5 @@
 require 'csv'
+require 'thor'
 
 # this class is to parse out name, phone, email and twitter data.
 class Parse
@@ -10,6 +11,12 @@ class Parse
   end
 
   def output
+    # Used Thor::Error for prettier error reporting until better way found
+    raise Thor::Error, 'txt2csv: prefix file required' if @prefile.nil?
+    raise Thor::Error, 'txt2csv: suffix file required' if @suffile.nil?
+    raise Thor::Error, 'txt2csv: input file required' if @infile.nil?
+    raise Thor::Error, 'txt2csv: output file required' if @outfile.nil?
+
     CSV.open(@outfile, 'w',
              write_headers: true,
              headers: %w( pre first middle last country area phonepre line ext

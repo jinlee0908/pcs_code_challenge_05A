@@ -7,10 +7,10 @@ require_relative '../lib/analyzenew'
 require_relative '../lib/parse.rb'
 class Commands < Thor
 
-  class_options %w( input -i ) => :string
-  class_options %w( output -o) => :string
-  class_options %w( prefix -p ) => :string
-  class_options %w( suffix -s ) => :string
+  class_options %w( input i ) => :string
+  class_options %w( output o) => :string
+  class_options %w( prefix p ) => :string
+  class_options %w( suffix s ) => :string
 
   desc 'analyze', 'Initate Analyze commands'
   def analyze
